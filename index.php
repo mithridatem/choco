@@ -1,7 +1,8 @@
 <?php
     //import de l'autoloader des classes
     require_once './autoload.php';
-    use App\Utils\BddConnect;
+    use App\Controller\UtilisateurController;
+    $userController = new UtilisateurController();
     //utilisation de session_start(pour gérer la connexion au serveur)
     session_start();
     //Analyse de l'URL avec parse_url() et retourne ses composants
@@ -13,8 +14,8 @@
         case '/mvc/':
             include './home.php';
             break;
-        case '/mvc/test':
-            include './test.php';
+        case '/mvc/useradd':
+            $userController->addUser();
             break;
         default:
             include './error.php';
