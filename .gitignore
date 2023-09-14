@@ -1,0 +1,6 @@
+env.php
+autoload.php
+*.jpg
+*.png
+*.jpeg
+*.bmp
