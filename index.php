@@ -3,7 +3,9 @@
     require_once './autoload.php';
     require_once './vendor/autoload.php';
     use App\Controller\UtilisateurController;
-    $userController = new UtilisateurController();
+    use App\Controller\RolesController;
+    $userController = new UtilisateurController();  
+    $rolesController = new RolesController();  
     //utilisation de session_start(pour gérer la connexion au serveur)
     session_start();
     //Analyse de l'URL avec parse_url() et retourne ses composants
@@ -17,6 +19,9 @@
             break;
         case '/mvc/useradd':
             $userController->addUser();
+            break;
+        case '/mvc/rolesadd':
+            $rolesController->addRoles();
             break;
         default:
             include './error.php';
