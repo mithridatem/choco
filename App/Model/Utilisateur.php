@@ -44,7 +44,7 @@ class Utilisateur extends BddConnect{
     public function getPassword():?string{
         return $this->password_utilisateur;
     }
-    public function setPasword(?string $password){
+    public function setPassword(?string $password){
         $this->password_utilisateur = $password;
     }
     public function getImage():?string{
@@ -66,7 +66,7 @@ class Utilisateur extends BddConnect{
             $nom = $this->nom_utilisateur;
             $prenom = $this->prenom_utilisateur;
             $mail = $this->mail_utilisateur;
-            $password = $this->mail_utilisateur;
+            $password = $this->password_utilisateur;
             $req = $this->connexion()->prepare(
                 "INSERT INTO utilisateur(nom_utilisateur, prenom_utilisateur, 
                 mail_utilisateur, password_utilisateur) VALUES(?,?,?,?)");
@@ -75,6 +75,21 @@ class Utilisateur extends BddConnect{
             $req->bindParam(3, $mail, \PDO::PARAM_STR);
             $req->bindParam(4, $password, \PDO::PARAM_STR);
             $req->execute();
+        } catch (\Exception $e) {
+            die('Error : '.$e->getMessage());
+        }
+    }
+    public function findOneBy(){
+        try {
+            //récupérer les données de l'objet
+            $mail = $this->mail_utilisateur;
+            $req = $this->connexion()->prepare(
+                "SELECT id_utilisateur, nom_utilisateur, prenom_utilisateur, 
+                mail_utilisateur, password_utilisateur FROM utilisateur WHERE mail_utilisateur = ?");
+            $req->bindParam(1, $mail, \PDO::PARAM_STR);
+            $req->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Utilisateur::class);
+            $req->execute();
+            return $req->fetch();
         } catch (\Exception $e) {
             die('Error : '.$e->getMessage());
         }

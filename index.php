@@ -1,6 +1,7 @@
 <?php
     //import de l'autoloader des classes
     require_once './autoload.php';
+    require_once './vendor/autoload.php';
     use App\Controller\UtilisateurController;
     $userController = new UtilisateurController();
     //utilisation de session_start(pour gérer la connexion au serveur)
