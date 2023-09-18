@@ -4,8 +4,10 @@
     require_once './vendor/autoload.php';
     use App\Controller\UtilisateurController;
     use App\Controller\RolesController;
+    use App\Controller\HomeController;
     $userController = new UtilisateurController();  
-    $rolesController = new RolesController();  
+    $rolesController = new RolesController();
+    $homeController = new HomeController();  
     //utilisation de session_start(pour gérer la connexion au serveur)
     session_start();
     //Analyse de l'URL avec parse_url() et retourne ses composants
@@ -15,7 +17,7 @@
     //routeur
     switch ($path) {
         case '/mvc/':
-            $userController->home();
+            $homeController->getHome();
             break;
         case '/mvc/useradd':
             $userController->addUser();
@@ -30,7 +32,7 @@
             $userController->deconnexionUser();
             break;
         default:
-            include './error.php';
+            $homeController->get404();
             break;
     }
 ?>

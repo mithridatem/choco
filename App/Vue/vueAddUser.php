@@ -1,4 +1,4 @@
-<?php ob_start();?>
+<?php ob_start()?>
     <form action="" method="post" enctype="multipart/form-data">
         <label for="nom_utilisateur">Saisir le nom:</label>
         <input type="text" name="nom_utilisateur">
@@ -14,4 +14,4 @@
         <input type="submit" value="Ajouter" name="submit">
         <div><?=$error?></div>
     </form>
-<?php $content = ob_get_clean();?>
+<?php $content = ob_get_clean()?>

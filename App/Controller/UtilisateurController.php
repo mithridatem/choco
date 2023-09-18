@@ -84,10 +84,6 @@ class UtilisateurController extends Utilisateur{
         Template::render('navbar.php', 'Inscription', 'vueConnexionUser.php', 'footer.php', $error, 'script.js', 'style.css');
         //include './App/Vue/vueConnexionUser.php';
     }
-    public function home(){
-        $error ="";
-        Template::render('navbar.php', 'home', 'home.php', 'footer.php', $error, 'script.js', 'style.css');
-    }
     public function deconnexionUser(){
         unset($_COOKIE['PHPSESSID']);
         session_destroy();
