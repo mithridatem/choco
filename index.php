@@ -23,6 +23,9 @@
         case '/mvc/rolesadd':
             $rolesController->addRoles();
             break;
+        case '/mvc/userTest':
+            $userController->testUser();
+            break;
         default:
             include './error.php';
             break;

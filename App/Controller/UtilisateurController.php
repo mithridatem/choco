@@ -19,6 +19,14 @@ class UtilisateurController extends Utilisateur{
                     $this->setMail(Utilitaire::cleanInput($_POST['mail_utilisateur']));
                     //tester si le compte existe
                     if(!$this->findOneBy()){
+                        if($_FILES['image_utilisateur']['tmp_name'] != ""){
+                            $this->setImage($_FILES['image_utilisateur']['name']);
+                            move_uploaded_file($_FILES['image_utilisateur']['tmp_name'], './Public/asset/images/'.$_FILES['image_utilisateur']['name']);
+                        }
+                        else{
+                            $this->setImage('test.png');
+                        }
+                        $this->setStatut(false);
                         //hashser le mot de passe
                         $this->setPassword(password_hash(Utilitaire::cleanInput($_POST['password_utilisateur']), PASSWORD_DEFAULT));
                         //Ajouter le compte en BDD
@@ -36,5 +44,14 @@ class UtilisateurController extends Utilisateur{
             }
         }
         include './App/Vue/vueAddUser.php';
+    }
+    public function testUser(){
+        $this->setNom('Test');
+        $this->setPrenom('User');
+        $this->setPassword('1234');
+        $this->setMail('test@test.com');
+        $this->getRoles()->setId(1);
+        $this->getRoles()->setNom('test');
+        dd($this->getRoles());
     }
 }

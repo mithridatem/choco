@@ -5,7 +5,7 @@
     <title>Ajouter un utilisateur</title>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <label for="nom_utilisateur">Saisir le nom:</label>
         <input type="text" name="nom_utilisateur">
         <label for="prenom_utilisateur">Saisir le prénom:</label>
@@ -16,6 +16,7 @@
         <input type="password" name="password_utilisateur">
         <label for="repeat_password_utilisateur">Re saisir le Password:</label>
         <input type="password" name="repeat_password_utilisateur">
+        <input type="file" name="image_utilisateur">
         <input type="submit" value="Ajouter" name="submit">
         <div><?=$error?></div>
     </form>

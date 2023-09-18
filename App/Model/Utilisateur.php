@@ -59,6 +59,12 @@ class Utilisateur extends BddConnect{
     public function setStatut(?bool $statut){
         $this->statut_utilisateur = $statut;
     }
+    public function getRoles():?Roles{
+        return $this->roles;
+    }
+    public function setRoles(?Roles $roles){
+        $this->roles = $roles;
+    }
     //Méthodes
     public function add(){
         try {
@@ -67,13 +73,17 @@ class Utilisateur extends BddConnect{
             $prenom = $this->prenom_utilisateur;
             $mail = $this->mail_utilisateur;
             $password = $this->password_utilisateur;
+            $image = $this->image_utilisateur;
+            $statut = $this->statut_utilisateur;
             $req = $this->connexion()->prepare(
                 "INSERT INTO utilisateur(nom_utilisateur, prenom_utilisateur, 
-                mail_utilisateur, password_utilisateur) VALUES(?,?,?,?)");
+                mail_utilisateur, password_utilisateur, image_utilisateur, statut_utilisateur) VALUES(?,?,?,?,?,?)");
             $req->bindParam(1, $nom, \PDO::PARAM_STR);
             $req->bindParam(2, $prenom, \PDO::PARAM_STR);
             $req->bindParam(3, $mail, \PDO::PARAM_STR);
             $req->bindParam(4, $password, \PDO::PARAM_STR);
+            $req->bindParam(5, $image, \PDO::PARAM_STR);
+            $req->bindParam(6, $statut, \PDO::PARAM_BOOL);
             $req->execute();
         } catch (\Exception $e) {
             die('Error : '.$e->getMessage());
