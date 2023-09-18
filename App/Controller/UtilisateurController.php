@@ -51,7 +51,8 @@ class UtilisateurController extends Utilisateur{
                 $error = "Veuillez renseigner tous les champs du formulaire";
             }
         }
-        Template::render('navbar.php', 'Inscription', 'vueAddUser.php', 'footer.php', $error, 'script.js', 'style.css');
+        Template::render('navbar.php', 'Inscription', 'vueAddUser.php', 'footer.php', 
+        $error, ['script.js'], ['style.css']);
     }
     public function connexionUser(){   
         $error ="";
@@ -81,7 +82,8 @@ class UtilisateurController extends Utilisateur{
                 $error = "Veuillez renseigner tous les champs du formulaire";
             }
         }
-        Template::render('navbar.php', 'Inscription', 'vueConnexionUser.php', 'footer.php', $error, 'script.js', 'style.css');
+        Template::render('navbar.php', 'Inscription', 'vueConnexionUser.php', 'footer.php', 
+        $error, ['script.js'], ['style.css']);
         //include './App/Vue/vueConnexionUser.php';
     }
     public function deconnexionUser(){
