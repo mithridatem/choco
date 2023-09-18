@@ -89,4 +89,9 @@ class UtilisateurController extends Utilisateur{
         $error ="";
         Template::render('navbar.php', 'Inscription', 'vueAddUser.php', 'footer.php');
     }
+    public function deconnexionUser(){
+        unset($_COOKIE['PHPSESSID']);
+        session_destroy();
+        header('Location: ./');
+    }
 }
