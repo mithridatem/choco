@@ -15,7 +15,7 @@
     //routeur
     switch ($path) {
         case '/mvc/':
-            include './home.php';
+            $userController->home();
             break;
         case '/mvc/useradd':
             $userController->addUser();
@@ -28,9 +28,6 @@
             break;
         case '/mvc/userdeconnexion':
             $userController->deconnexionUser();
-            break;
-        case '/mvc/exemple':
-            $userController->exemple();
             break;
         default:
             include './error.php';
