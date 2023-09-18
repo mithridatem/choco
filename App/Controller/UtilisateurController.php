@@ -51,8 +51,7 @@ class UtilisateurController extends Utilisateur{
                 $error = "Veuillez renseigner tous les champs du formulaire";
             }
         }
-        Template::render('navbar.php', 'Inscription', 'vueAddUser.php', 'footer.php', $error);
-
+        Template::render('navbar.php', 'Inscription', 'vueAddUser.php', 'footer.php', $error, 'script.js', 'style.css');
     }
     public function connexionUser(){   
         $error ="";
@@ -66,7 +65,6 @@ class UtilisateurController extends Utilisateur{
                 if($user){
                     //tester si le mot de passe correspond (password_verify)
                     if(password_verify(Utilitaire::cleanInput($_POST['password_utilisateur']), $user->getPassword())){
-                        dump('connecté');
                         $error = "Connecté";
                         $_SESSION['connected'] = true;
                         $_SESSION['id'] = $user->getId();
@@ -83,12 +81,12 @@ class UtilisateurController extends Utilisateur{
                 $error = "Veuillez renseigner tous les champs du formulaire";
             }
         }
-        Template::render('navbar.php', 'Inscription', 'vueConnexionUser.php', 'footer.php', $error);
+        Template::render('navbar.php', 'Inscription', 'vueConnexionUser.php', 'footer.php', $error, 'script.js', 'style.css');
         //include './App/Vue/vueConnexionUser.php';
     }
     public function home(){
         $error ="";
-        Template::render('navbar.php', 'home', 'home.php', 'footer.php', $error);
+        Template::render('navbar.php', 'home', 'home.php', 'footer.php', $error, 'script.js', 'style.css');
     }
     public function deconnexionUser(){
         unset($_COOKIE['PHPSESSID']);
