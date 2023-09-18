@@ -23,8 +23,8 @@
         case '/mvc/rolesadd':
             $rolesController->addRoles();
             break;
-        case '/mvc/userTest':
-            $userController->testUser();
+        case '/mvc/userconnexion':
+            $userController->connexionUser();
             break;
         default:
             include './error.php';

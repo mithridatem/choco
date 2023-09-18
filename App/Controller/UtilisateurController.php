@@ -56,9 +56,30 @@ class UtilisateurController extends Utilisateur{
     {   
         $error ="";
         //tester si le formulaire est submit
-        //tester si les champs sont remplis
-        //tester si le compte existe (findOneBy du model)
-        //tester si le mot de passe correspond (password_verify)
+        if(isset($_POST['submit'])){
+            //tester si les champs sont remplis
+            if(!empty($_POST['mail_utilisateur']) AND !empty($_POST['password_utilisateur'])){
+                //tester si le compte existe (findOneBy du model)
+                $this->setMail(Utilitaire::cleanInput($_POST['mail_utilisateur']));
+                $user = $this->findOneBy();
+                if($user){
+                    //tester si le mot de passe correspond (password_verify)
+                    if(password_verify(Utilitaire::cleanInput($_POST['password_utilisateur']), $user->getPassword())){
+                        $error = "Connecté";
+                        $_SESSION['id'] = $user->getId();
+                        $_SESSION['nom'] = $user->getNom();
+                        $_SESSION['prenom'] = $user->getPrenom();
+                        $_SESSION['image'] = $user->getImage();
+                    }else {
+                        $error = "Les informations de connexion ne sont pas valides";
+                    }
+                }else{
+                    $error = "Les informations de connexion ne sont pas valides";
+                }
+            }else{
+                $error = "Veuillez renseigner tous les champs du formulaire";
+            }
+        }
         include './App/Vue/vueConnexionUser.php';
     }
 }
