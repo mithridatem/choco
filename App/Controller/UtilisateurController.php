@@ -45,13 +45,13 @@ class UtilisateurController extends Utilisateur{
         }
         include './App/Vue/vueAddUser.php';
     }
-    public function testUser(){
-        $this->setNom('Test');
-        $this->setPrenom('User');
-        $this->setPassword('1234');
-        $this->setMail('test@test.com');
-        $this->getRoles()->setId(1);
-        $this->getRoles()->setNom('test');
-        dd($this->getRoles());
+    public function connexion()
+    {   
+        $error ="";
+        //tester si le formulaire est submit
+        //tester si les champs sont remplis
+        //tester si le compte existe (findOneBy du model)
+        //tester si le mot de passe correspond (password_verify)
+        include './App/Vue/vueConnexionUser.php';
     }
 }
