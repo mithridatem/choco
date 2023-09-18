@@ -26,6 +26,9 @@
         case '/mvc/userconnexion':
             $userController->connexionUser();
             break;
+        case '/mvc/exemple':
+            $userController->exemple();
+            break;
         default:
             include './error.php';
             break;

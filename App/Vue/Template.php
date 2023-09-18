@@ -1,8 +1,11 @@
 <?php
 namespace App\vue;
 class Template{
-    public function render($header,$title,$content,$footer){
-        include './App/Vue/base.php';
+    public static function render($navbar,$title,$content,$footer){
+        include './App/Vue/'.$navbar;
+        include './App/Vue/'.$footer;
+        include './App/Vue/'.$content;
+        include './App/Vue/vueTemplate.php';
     }
 }
 ?>

@@ -2,6 +2,7 @@
 namespace App\Controller;
 use App\Model\Utilisateur;
 use App\Utils\Utilitaire;
+use App\vue\Template;
 class UtilisateurController extends Utilisateur{
     public function addUser(){
         $error = "";
@@ -50,7 +51,8 @@ class UtilisateurController extends Utilisateur{
                 $error = "Veuillez renseigner tous les champs du formulaire";
             }
         }
-        include './App/Vue/vueAddUser.php';
+        Template::render('navbar.php', 'Inscription', 'vueAddUser.php', 'footer.php');
+        //include './App/Vue/vueAddUser.php';
     }
     public function connexionUser()
     {   
@@ -80,6 +82,11 @@ class UtilisateurController extends Utilisateur{
                 $error = "Veuillez renseigner tous les champs du formulaire";
             }
         }
-        include './App/Vue/vueConnexionUser.php';
+        Template::render('navbar.php', 'Inscription', 'vueConnexionUser.php', 'footer.php');
+        //include './App/Vue/vueConnexionUser.php';
+    }
+    public function exemple(){
+        $error ="";
+        Template::render('navbar.php', 'Inscription', 'vueAddUser.php', 'footer.php');
     }
 }
