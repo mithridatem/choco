@@ -20,8 +20,15 @@ class UtilisateurController extends Utilisateur{
                     //tester si le compte existe
                     if(!$this->findOneBy()){
                         if($_FILES['image_utilisateur']['tmp_name'] != ""){
-                            $this->setImage($_FILES['image_utilisateur']['name']);
-                            move_uploaded_file($_FILES['image_utilisateur']['tmp_name'], './Public/asset/images/'.$_FILES['image_utilisateur']['name']);
+                            $ext = Utilitaire::getFileExtension($_FILES['image_utilisateur']['name']);
+                            if($ext=='png' OR $ext =='PNG' OR $ext = 'jpg' OR $ext =='JPG'OR $ext =='jpeg' OR $ext == 'JPEG' OR $ext=='bmp' OR $ext=='BMP'){
+                                $this->setImage($_FILES['image_utilisateur']['name']);
+                                move_uploaded_file($_FILES['image_utilisateur']['tmp_name'], './Public/asset/images/'.$_FILES['image_utilisateur']['name']);
+                            }
+                            else{
+                                $error = 'format incorrect';
+                                $this->setImage('test.png');
+                            }
                         }
                         else{
                             $this->setImage('test.png');
@@ -45,7 +52,7 @@ class UtilisateurController extends Utilisateur{
         }
         include './App/Vue/vueAddUser.php';
     }
-    public function connexion()
+    public function connexionUser()
     {   
         $error ="";
         //tester si le formulaire est submit
