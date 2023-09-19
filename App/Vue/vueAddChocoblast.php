@@ -6,10 +6,11 @@
         <input type="date" name="date_chocoblast">
         <select name="cible_chocoblast">
             <option value="">Sélectionner une cible</option>
-            <?php foreach($users as $user):?>
+            <?php foreach($tab as $user):?>
                 <option value="<?=$user->getId()?>"><?=$user->getPrenom()." ".$user->getNom()?></option>
             <?php endforeach?>
         </select>
         <input type="submit" value="Ajouter" name="submit">
     </form>
+    <p><?=$error?></p>
 <?php $content = ob_get_clean()?>

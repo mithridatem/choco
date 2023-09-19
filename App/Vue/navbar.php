@@ -2,6 +2,8 @@
 <?php if(isset($_SESSION['connected'])):?>
 <ul>
     <li><a href="./">Accueil</a></li>
+    <li><a href="./chocoblastadd">Chocoblaster</a></li>
+    <li><a href="./rolesadd">Ajouter un roles</a></li>
     <li><?=$_SESSION['nom']?></li>
     <li><a href="./userdeconnexion">Deconnexion</a></li>
 </ul>

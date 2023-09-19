@@ -61,7 +61,7 @@ class Chocoblast extends BddConnect{
     /*---------------------------- 
                 Méthode
     -----------------------------*/
-    private function add(){
+    public function add(){
         try {
             $slogan = $this->getSlogan();
             $date = $this->getDate();
@@ -80,5 +80,27 @@ class Chocoblast extends BddConnect{
         } catch (\Exception $e) {
             die('Error :'.$e->getMessage());
         } 
+    }
+    public function findOneBy(){
+        try {
+            $slogan = $this->getSlogan();
+            $date = $this->getDate();
+            $auteur = $this->getAuteur()->getId();
+            $cible = $this->getCible()->getId();
+            $req = $this->connexion()->prepare('SELECT id_chocoblast, slogan_chocoblast, 
+            date_chocoblast, auteur_chocoblast, cible_chocoblast FROM chocoblast 
+            WHERE slogan_chocoblast = ? AND date_chocoblast = ? AND auteur_chocoblast = ? 
+            AND cible_chocoblast = ?');
+            $req->bindParam(1, $slogan, \PDO::PARAM_STR);
+            $req->bindParam(2, $date, \PDO::PARAM_STR);
+            $req->bindParam(3, $auteur, \PDO::PARAM_INT);
+            $req->bindParam(4, $cible, \PDO::PARAM_INT);
+            $req->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Chocoblast::class);
+            $req->execute();
+            return $req->fetch();
+        } 
+        catch (\Exception $e) {
+            die('Error : '.$e->getMessage());
+        }
     }
 }
