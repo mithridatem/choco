@@ -1,7 +1,7 @@
 <?php
 namespace App\vue;
 class Template{
-    public static function render($navbar,$title,$content,$footer,$error, array $js, array $css){
+    public static function render($navbar,$title,$content,$footer,$error, array $js, array $css, $tab=null){
         if(file_exists('./App/Vue/'.$content)){
             include './App/Vue/'.$navbar;
             include './App/Vue/'.$footer;

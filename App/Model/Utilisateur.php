@@ -104,5 +104,16 @@ class Utilisateur extends BddConnect{
             die('Error : '.$e->getMessage());
         }
     }
+    public function findAll(){
+        try {
+            $req = $this->connexion()->prepare(
+                "SELECT id_utilisateur, nom_utilisateur, prenom_utilisateur, 
+                mail_utilisateur, image_utilisateur FROM utilisateur");
+            $req->execute();
+            return $req->fetchAll(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Utilisateur::class);
+        } catch (\Exception $e) {
+            die('Error : '.$e->getMessage());
+        }
+    }
 }
 ?> 
