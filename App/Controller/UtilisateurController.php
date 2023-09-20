@@ -40,9 +40,9 @@ class UtilisateurController extends Utilisateur{
                         $this->setPassword(password_hash(Utilitaire::cleanInput($_POST['password_utilisateur']), PASSWORD_DEFAULT));
                         //créer les variables 
                         $destinataire =  $this->getMail();
-                        $objet = "clic plus bas pour faire fonctionner le site";
-                        $contenu = "<p>clic en dessous pour accéder au site</p>
-                        <a href='localhost/mvc/useractivate?mail=".$this->getMail()."'></a>";
+                        $objet = 'clic plus bas pour faire fonctionner le site';
+                        $contenu = '<p>clic en dessous pour accéder au site</p>
+                        <a href="localhost/mvc/useractivate?mail='.$this->getMail().'">activer le compte</a>';
                         //Ajouter le compte en BDD
                         $this->add();
                         Messagerie::sendEmail($destinataire, $objet, $contenu);
