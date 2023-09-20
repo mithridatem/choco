@@ -7,7 +7,6 @@ class Messagerie{
     public static function sendEmail($destinataire, $objet, $contenu){
         require './env.php';
         $mail = new PHPMailer(true);
-
         try {
             //Paramétre du serveur Messagerie
             $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
@@ -27,7 +26,7 @@ class Messagerie{
             $mail->isHTML(true);
             $mail->Subject = $objet;
             $mail->Body    = $contenu;
-           return $mail->send();
+            return $mail->send();
 
         } catch (\Exception $e) {
             die("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
