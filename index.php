@@ -1,4 +1,6 @@
 <?php
+    //import du fichier de configuration
+    include './env.php';
     //import de l'autoloader des classes
     require_once './autoload.php';
     require_once './vendor/autoload.php';
@@ -32,6 +34,9 @@
             case '/mvc/chocoblastadd':
                 $chocoblastController->addChocoblast();
                 break;
+            case '/mvc/chocoblastall':
+                $chocoblastController->getAllChocoblast();
+                break;
             default:
                 $homeController->get404();
                 break;
@@ -47,6 +52,9 @@
                 break;
             case '/mvc/useradd':
                 $userController->addUser();
+                break;
+            case '/mvc/chocoblastall':
+                $chocoblastController->getAllChocoblast();
                 break;
             default:
                 $homeController->get404();

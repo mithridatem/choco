@@ -34,4 +34,13 @@ class ChocoblastController extends Chocoblast{
         Template::render('navbar.php', 'Chocoblast', 'vueAddChocoblast.php', 'footer.php', 
         $error, ['script.js', 'main.js'], ['style.css', 'main.css'], $users);
     }
+    public function getAllChocoblast(){
+        $error = "";
+        $chocos = $this->findAll();
+        if(empty($chocos)){
+            $error = "Il n'y à pas de chocoblasts sur le site";
+        }
+        Template::render('navbar.php', 'Tous les Chocoblasts', 'vueAllChocoblast.php', 'footer.php', 
+        $error, ['script.js', 'main.js'], ['style.css', 'main.css'], $chocos);
+    }
 }
