@@ -37,6 +37,9 @@
             case '/mvc/chocoblastall':
                 $chocoblastController->getAllChocoblast();
                 break;
+            case '/mvc/emailtest':
+                $homeController->testMail();
+                break;
             default:
                 $homeController->get404();
                 break;
@@ -55,6 +58,9 @@
                 break;
             case '/mvc/chocoblastall':
                 $chocoblastController->getAllChocoblast();
+                break;
+            case '/mvc/emailtest':
+                $homeController->testMail();
                 break;
             default:
                 $homeController->get404();

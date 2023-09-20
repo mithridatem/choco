@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller;
+use App\Utils\Messagerie;
 use App\vue\Template;
 class HomeController{
     public function getHome(){
@@ -11,6 +12,9 @@ class HomeController{
         $error = "";
         Template::render('navbar.php', 'Error 404', 'vueError.php', 'footer.php', 
         $error, ['script.js'], ['style.css']);
+    }
+    public function testMail(){
+        Messagerie::sendEmail('mathieumithridate@adrar-formation.com','exemple de mail', 'test d\'envoi depuis chocoblast');
     }
 }
 ?>
