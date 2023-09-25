@@ -115,7 +115,7 @@ class UtilisateurController extends Utilisateur{
             //tester si le paramètre $_GET['mail'] est rempli
             if(!empty(($_GET['mail']))){
                 //setter la valeur de $_GET['mail'] à l'attribut mail_utilisateur
-                $this->setMail($_GET['mail']);
+                $this->setMail(Utilitaire::cleanInput($_GET['mail']));
                 //appeler la fonction findOneBy qui va retourner un compte (objet) 
                 //qui existe ou false
                 if($this->findOneBy()){
