@@ -37,6 +37,9 @@
             case '/mvc/chocoblastall':
                 $chocoblastController->getAllChocoblast();
                 break;
+            case '/mvc/chocoblastupdate':
+                $chocoblastController->updateChocoblast();
+                break;
             case '/mvc/emailtest':
                 $homeController->testMail();
                 break;

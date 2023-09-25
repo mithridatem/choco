@@ -103,18 +103,56 @@ class Chocoblast extends BddConnect{
             die('Error : '.$e->getMessage());
         }
     }
-
+    public function find(){
+        try {
+            $id = $this->id_chocoblast;
+            $req = $this->connexion()->prepare('SELECT 
+            id_chocoblast, slogan_chocoblast, date_chocoblast, cible.nom_utilisateur AS cible_nom, 
+            cible.prenom_utilisateur AS cible_prenom, cible.image_utilisateur AS cible_image, 
+            auteur.nom_utilisateur AS auteur_nom, auteur.prenom_utilisateur AS auteur_prenom,
+            auteur.image_utilisateur AS auteur_image, auteur.id_utilisateur AS auteur_id
+            FROM chocoblast 
+            INNER JOIN utilisateur AS cible ON chocoblast.cible_chocoblast = cible.id_utilisateur
+            INNER JOIN utilisateur AS auteur ON chocoblast.auteur_chocoblast = auteur.id_utilisateur
+            WHERE id_chocoblast = ?');
+            $req->bindParam(1, $id, \PDO::PARAM_INT);
+            $req->execute();
+            return $req->fetch(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Chocoblast::class);
+        } catch (\Exception $e) {
+            die('Error : '.$e->getMessage());
+        }
+    }
     public function findAll(){
         try {
             $req = $this->connexion()->prepare('SELECT 
-            id_chocoblast, slogan_chocoblast, date_chocoblast, cible.nom_utilisateur AS cible_nom, cible.prenom_utilisateur
-            AS cible_prenom, cible.image_utilisateur AS cible_image, auteur.nom_utilisateur AS auteur_nom, 
-            auteur.prenom_utilisateur AS auteur_prenom, auteur.image_utilisateur AS auteur_image
+            id_chocoblast, slogan_chocoblast, date_chocoblast, cible.nom_utilisateur AS cible_nom, 
+            cible.prenom_utilisateur AS cible_prenom, cible.image_utilisateur AS cible_image, 
+            auteur.nom_utilisateur AS auteur_nom, auteur.prenom_utilisateur AS auteur_prenom,
+            auteur.image_utilisateur AS auteur_image, auteur.id_utilisateur AS auteur_id
             FROM chocoblast 
             INNER JOIN utilisateur AS cible ON chocoblast.cible_chocoblast = cible.id_utilisateur
             INNER JOIN utilisateur AS auteur ON chocoblast.auteur_chocoblast = auteur.id_utilisateur');
             $req->execute();
             return $req->fetchAll(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Chocoblast::class);
+        } catch (\Exception $e) {
+            die('Error : '.$e->getMessage());
+        }
+    }
+    public function update(){
+        try {
+            $id = $this->id_chocoblast;
+            $slogan = $this->slogan_chocoblast;
+            $date = $this->date_chocoblast;
+            $auteur = $this->auteur_chocoblast->getId();
+            $cible = $this->cible_chocoblast->getId();
+            $req = $this->connexion()->prepare('UPDATE chocoblast SET slogan_chocoblast = ?, 
+            date_chocoblast = ?, cible_chocoblast = ? WHERE id_chocoblast = ? AND auteur_chocoblast = ?');
+            $req->bindParam(1, $slogan, \PDO::PARAM_STR);
+            $req->bindParam(2, $date, \PDO::PARAM_STR);
+            $req->bindParam(3, $cible, \PDO::PARAM_INT);
+            $req->bindParam(4, $id, \PDO::PARAM_INT);
+            $req->bindParam(5, $auteur, \PDO::PARAM_INT);
+            $req->execute();
         } catch (\Exception $e) {
             die('Error : '.$e->getMessage());
         }
