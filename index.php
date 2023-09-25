@@ -62,6 +62,9 @@
             case '/mvc/emailtest':
                 $homeController->testMail();
                 break;
+            case '/mvc/useractivate':
+                $userController->activateUser();
+                break;
             default:
                 $homeController->get404();
                 break;

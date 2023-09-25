@@ -8,6 +8,7 @@ class Messagerie{
         require './env.php';
         $mail = new PHPMailer(true);
         try {
+            $mail->setLanguage('fr');
             //Paramétre du serveur Messagerie
             $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
@@ -26,6 +27,7 @@ class Messagerie{
             $mail->isHTML(true);
             $mail->Subject = $objet;
             $mail->Body    = $contenu;
+            
             return $mail->send();
 
         } catch (\Exception $e) {

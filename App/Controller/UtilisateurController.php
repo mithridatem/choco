@@ -40,9 +40,10 @@ class UtilisateurController extends Utilisateur{
                         $this->setPassword(password_hash(Utilitaire::cleanInput($_POST['password_utilisateur']), PASSWORD_DEFAULT));
                         //créer les variables 
                         $destinataire =  $this->getMail();
-                        $objet = 'clic plus bas pour faire fonctionner le site';
+                        $objet = 'Cliquez utiliser le site';
                         $contenu = '<p>clic en dessous pour accéder au site</p>
-                        <a href="http://localhost/mvc/useractivate?mail='.$this->getMail().'">activer le compte</a>';
+                        <a href="http://localhost/mvc/useractivate?mail='.$this->getMail().'
+                        ">activer le compte</a>';
                         //Ajouter le compte en BDD
                         $this->add();
                         Messagerie::sendEmail($destinataire, $objet, $contenu);
@@ -71,30 +72,78 @@ class UtilisateurController extends Utilisateur{
                 $this->setMail(Utilitaire::cleanInput($_POST['mail_utilisateur']));
                 $user = $this->findOneBy();
                 if($user){
-                    //tester si le mot de passe correspond (password_verify)
-                    if(password_verify(Utilitaire::cleanInput($_POST['password_utilisateur']), $user->getPassword())){
-                        $error = "Connecté";
-                        $_SESSION['connected'] = true;
-                        $_SESSION['id'] = $user->getId();
-                        $_SESSION['nom'] = $user->getNom();
-                        $_SESSION['prenom'] = $user->getPrenom();
-                        $_SESSION['image'] = $user->getImage();
-                    }else {
-                        $error = "Les informations de connexion ne sont pas valides";
+                    //Test si le compte est activé
+                    if($user->getStatut()){
+                        //tester si le mot de passe correspond (password_verify)
+                        if(password_verify(Utilitaire::cleanInput($_POST['password_utilisateur']), $user->getPassword())){
+                            $error = "Connecté";
+                            $_SESSION['connected'] = true;
+                            $_SESSION['id'] = $user->getId();
+                            $_SESSION['nom'] = $user->getNom();
+                            $_SESSION['prenom'] = $user->getPrenom();
+                            $_SESSION['image'] = $user->getImage();
+                        }else {
+                            $error = "Les informations de connexion ne sont pas valides";
+                        }
                     }
+                    //Test le compte n'est pas activé
+                    else{
+                        header('Refresh:2; url=./useractivate?mail='.$user->getMail().'');
+                    }
+                //test le compte n'existe pas
                 }else{
                     $error = "Les informations de connexion ne sont pas valides";
                 }
+            //Test les champs sont vides
             }else{
                 $error = "Veuillez renseigner tous les champs du formulaire";
             }
         }
-        Template::render('navbar.php', 'Inscription', 'vueConnexionUser.php', 'footer.php', 
+        Template::render('navbar.php', 'Connexion', 'vueConnexionUser.php', 'footer.php', 
         $error, ['script.js', 'main.js'], ['style.css', 'main.css']);
     }
     public function deconnexionUser(){
         unset($_COOKIE['PHPSESSID']);
         session_destroy();
         header('Location: ./');
+    }
+    public function activateUser(){
+        $error = "";
+        $url = "";
+        //tester si le paramètre existe
+        if(isset($_GET['mail'])){
+            //tester si le paramètre $_GET['mail'] est rempli
+            if(!empty(($_GET['mail']))){
+                //setter la valeur de $_GET['mail'] à l'attribut mail_utilisateur
+                $this->setMail($_GET['mail']);
+                //appeler la fonction findOneBy qui va retourner un compte (objet) 
+                //qui existe ou false
+                if($this->findOneBy()){
+                    $this->update();
+                    $error = 'le compte a été activé';
+                    $url = "./userconnexion";
+                }
+                //Test le compte n'existe pas
+                else{
+                    $error = 'Aucun compte trouvé';
+                    $url = "./useradd";
+                }
+            }
+            //tester si le paramètre $_GET['mail'] est vide
+            else{
+               $error = 'le mail n\'est pas renseigné';
+               $url = "./useradd";
+            }
+        }
+        //le paramètre $_GET['mail'] n'existe pas
+        else{
+            $error = 'le paramètre n\'existe pas';
+            $url = "./useradd";
+        }
+        //appel de la vue (page html)
+        Template::render('navbar.php', 'Activation', 'vueActivateUser.php', 'footer.php', 
+        $error, ['script.js', 'main.js'], ['style.css', 'main.css']);
+        //redirection
+        header("Refresh:2; url=$url");
     }
 }
