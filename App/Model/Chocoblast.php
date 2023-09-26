@@ -6,7 +6,7 @@ class Chocoblast extends BddConnect{
     /*---------------------------- 
                 Attributs
     -----------------------------*/
-    private ?int $id_chocoblast;
+    private int $id_chocoblast;
     private ?string $slogan_chocoblast;
     private ?string $date_chocoblast;
     private ?bool $statut_chocoblast;
@@ -22,7 +22,7 @@ class Chocoblast extends BddConnect{
     /*---------------------------- 
             Getters et Setters
     -----------------------------*/
-    public function getId():?int{
+    public function getId(){
         return $this->id_chocoblast;
     }
     public function setId(?int $id):void{
@@ -105,19 +105,26 @@ class Chocoblast extends BddConnect{
     }
     public function find(){
         try {
-            $id = $this->id_chocoblast;
-            $req = $this->connexion()->prepare('SELECT 
-            id_chocoblast, slogan_chocoblast, date_chocoblast, cible.nom_utilisateur AS cible_nom, 
-            cible.prenom_utilisateur AS cible_prenom, cible.image_utilisateur AS cible_image, 
-            auteur.nom_utilisateur AS auteur_nom, auteur.prenom_utilisateur AS auteur_prenom,
-            auteur.image_utilisateur AS auteur_image, auteur.id_utilisateur AS auteur_id
+            $id = $this->getId();
+            $req = $this->connexion()->prepare('SELECT id_chocoblast, slogan_chocoblast,
+            date_chocoblast, auteur_chocoblast AS auteur_id, auteur.nom_utilisateur AS auteur_nom,
+            auteur.prenom_utilisateur AS auteur_prenom, cible_chocoblast AS cible_id,
+            cible.nom_utilisateur AS cible_nom, cible.prenom_utilisateur AS cible_prenom
             FROM chocoblast 
             INNER JOIN utilisateur AS cible ON chocoblast.cible_chocoblast = cible.id_utilisateur
             INNER JOIN utilisateur AS auteur ON chocoblast.auteur_chocoblast = auteur.id_utilisateur
             WHERE id_chocoblast = ?');
-            $req->bindParam(1, $id, \PDO::PARAM_INT);
+            $req->bindParam(1, $id , \PDO::PARAM_INT);
             $req->execute();
-            return $req->fetch(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Chocoblast::class);
+            $req->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Chocoblast::class);
+            $choco = $req->fetch();
+            $choco->getAuteur()->setId($choco->auteur_id);
+            $choco->getAuteur()->setNom($choco->auteur_nom);
+            $choco->getAuteur()->setPrenom($choco->auteur_prenom);
+            $choco->getCible()->setId($choco->cible_id);
+            $choco->getCible()->setNom($choco->cible_nom);
+            $choco->getCible()->setPrenom($choco->cible_prenom);
+            return $choco;
         } catch (\Exception $e) {
             die('Error : '.$e->getMessage());
         }
@@ -131,7 +138,7 @@ class Chocoblast extends BddConnect{
             auteur.image_utilisateur AS auteur_image, auteur.id_utilisateur AS auteur_id
             FROM chocoblast 
             INNER JOIN utilisateur AS cible ON chocoblast.cible_chocoblast = cible.id_utilisateur
-            INNER JOIN utilisateur AS auteur ON chocoblast.auteur_chocoblast = auteur.id_utilisateur');
+            INNER JOIN utilisateur AS auteur ON chocoblast.auteur_chocoblast = auteur.id_utilisateur LIMIT 1');
             $req->execute();
             return $req->fetchAll(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Chocoblast::class);
         } catch (\Exception $e) {

@@ -13,6 +13,11 @@ class HomeController{
         Template::render('navbar.php', 'Error 404', 'vueError.php', 'footer.php', 
         $error, ['script.js'], ['style.css']);
     }
+    public function get401(){
+        $error = "";
+        Template::render('navbar.php', 'Error 401', 'vueNoRight.php', 'footer.php', 
+        $error, ['script.js'], ['style.css']);
+    }
     public function testMail(){
         Messagerie::sendEmail('mathieumithridate@adrar-formation.com','exemple de mail', 'test d\'envoi depuis chocoblast');
     }

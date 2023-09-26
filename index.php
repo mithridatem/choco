@@ -68,6 +68,9 @@
             case '/mvc/useractivate':
                 $userController->activateUser();
                 break;
+            case '/mvc/chocoblastupdate':
+                $homeController->get401();
+                break;
             default:
                 $homeController->get404();
                 break;

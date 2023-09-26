@@ -48,15 +48,54 @@ class ChocoblastController extends Chocoblast{
         $user = new Utilisateur();
         $user->setId(Utilitaire::cleanInput($_SESSION['id']));
         $users = $user->findAll();
+        //tableau $data que l'on passe à la vue
+        $data = [];
+        $data[0]= $users;
         //Tester si les paramètres $_GET['id_chocoblast'] et $_GET['auteur_id'] existes
-            //Tester si les 2 paramètres GET ne sont pas vides
-                //Tester si auteur_id est égal à $_SESSION['id'] (vérifier si on est l'auteur)
-                    //Setter l' id à $this $this->setId($_GET['id_chocoblast'])
-                    //Tester si le chocoblast existe avec la fonction find
-                        //Tester si le formulaire est submit
-                            //tester si tous les champs sont bien remplis
-                                //mettre à jour le chocoblat avec la méthode Update
-        Template::render('navbar.php', 'mise à jour chocoblast', 'vueAddChocoblast.php', 'footer.php', 
-        $error, ['script.js', 'main.js'], ['style.css', 'main.css'], $users);
+        if(isset($_GET['id_chocoblast']) AND isset($_GET['auteur_id'])){
+            if(!empty($_GET['id_chocoblast']) AND !empty($_GET['auteur_id'])){
+                $this->setId(Utilitaire::cleanInput($_GET['id_chocoblast']));
+                $choco = $this->find();
+                //test si le chocoblast existe
+                if($choco){
+                    //injection des valeurs du chocoblast dans le tableau $data que l'on passe à la vue
+                    $data[1] = $choco;
+                    //test si le formulaire est submit
+                    if(isset($_POST['submit'])){
+                        //test si tous les champs sont bien remplis
+                        if(!empty($_POST['slogan_chocoblast']) AND !empty($_POST['date_chocoblast']) 
+                        AND !empty($_POST['cible_chocoblast'])){
+                            $slogan = Utilitaire::cleanInput($_POST['slogan_chocoblast']);
+                            $date = Utilitaire::cleanInput($_POST['date_chocoblast']);
+                            $cible = Utilitaire::cleanInput($_POST['cible_chocoblast']);
+                            $this->setSlogan($slogan);
+                            $this->setdate($date);
+                            $this->getCible()->setId($cible);
+                            $this->getAuteur()->setId($_SESSION['id']);
+                            $this->update();
+                            $error = "Le chocoblast a été mis jour";
+                        }
+                        //test les champs ne sont pas remplis
+                        else{
+                            $error = "Veuillez remplir tous les champs du formulaire";
+                        }
+                    }
+                }
+                //test le chocoblast n'existe pas
+                else{
+                    $error = "Le chocoblast n'existe pas";
+                }
+            }
+            //Test les valeurs de paramètres $_GET sont vides
+            else{
+                $error = "Les valeurs des paramètres sont vides";
+            } 
+        }
+        //Test les paramètres $_GET sont invalides
+        else{
+            $error = "Les paramètres sont invalides";
+        }
+        Template::render('navbar.php', 'mise à jour chocoblast', 'vueUpdateChocoblast.php', 'footer.php', 
+        $error, ['script.js', 'main.js'], ['style.css', 'main.css'], $data);
     }
 }
