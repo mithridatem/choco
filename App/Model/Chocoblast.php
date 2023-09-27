@@ -164,4 +164,40 @@ class Chocoblast extends BddConnect{
             die('Error : '.$e->getMessage());
         }
     }
+
+    public function filterAll($filter){
+        try {
+            $requete = 'SELECT id_chocoblast, slogan_chocoblast, date_chocoblast, cible.nom_utilisateur 
+            AS cible_nom, cible.prenom_utilisateur AS cible_prenom, cible.image_utilisateur AS cible_image, 
+            auteur.nom_utilisateur AS auteur_nom, auteur.prenom_utilisateur AS auteur_prenom,
+            auteur.image_utilisateur AS auteur_image, auteur.id_utilisateur AS auteur_id
+            FROM chocoblast 
+            INNER JOIN utilisateur AS cible ON chocoblast.cible_chocoblast = cible.id_utilisateur
+            INNER JOIN utilisateur AS auteur ON chocoblast.auteur_chocoblast = auteur.id_utilisateur ';
+           
+            switch ($filter) {
+                case 1:
+                    $order = 'ORDER BY slogan_chocoblast ASC';
+                    break;
+                case 2:
+                    $order = 'ORDER BY slogan_chocoblast DESC';
+                    break;
+                case 3:
+                    $order = 'ORDER BY date_chocoblast ASC';
+                    break;
+                case 4:
+                    $order = 'ORDER BY date_chocoblast DESC';
+                    break;
+                default:
+                    $order = "";
+                    break;
+            }
+            $requete .= $order;
+            $req = $this->connexion()->prepare($requete);
+            $req->execute();
+            return $req->fetchAll(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Chocoblast::class);
+        } catch (\Exception $e) {
+            die('Error : '.$e->getMessage());
+        }
+    }
 }

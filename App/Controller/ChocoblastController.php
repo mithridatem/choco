@@ -98,4 +98,22 @@ class ChocoblastController extends Chocoblast{
         Template::render('navbar.php', 'mise à jour chocoblast', 'vueUpdateChocoblast.php', 'footer.php', 
         $error, ['script.js', 'main.js'], ['style.css', 'main.css'], $data);
     }
+
+    public function filterChocoblast(){
+        $error = "";
+        $chocos = $this->filterAll(5);
+        if($chocos){
+            if(isset($_POST['submit'])){
+                if(!empty($_POST['filter'])){
+                    $chocos = $this->filterAll(Utilitaire::cleanInput($_POST['filter']));
+                }
+            }
+        }
+        else{
+            $error = "La liste des chocoblast est vide ";
+        }
+        $chocos = 
+        Template::render('navbar.php', 'mise à jour chocoblast', 'vueFilterAllChocoblast.php', 'footer.php', 
+        $error, ['script.js', 'main.js'], ['style.css', 'main.css'], $chocos);
+    }
 }

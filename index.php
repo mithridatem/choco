@@ -43,6 +43,9 @@
             case '/mvc/emailtest':
                 $homeController->testMail();
                 break;
+            case '/mvc/chocoblastfilter':
+                $chocoblastController->filterChocoblast();
+                break;
             default:
                 $homeController->get404();
                 break;
@@ -70,6 +73,9 @@
                 break;
             case '/mvc/chocoblastupdate':
                 $homeController->get401();
+                break;
+            case '/mvc/chocoblastfilter':
+                $chocoblastController->filterChocoblast();
                 break;
             default:
                 $homeController->get404();
