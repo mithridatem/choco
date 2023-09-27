@@ -138,7 +138,7 @@ class Chocoblast extends BddConnect{
             auteur.image_utilisateur AS auteur_image, auteur.id_utilisateur AS auteur_id
             FROM chocoblast 
             INNER JOIN utilisateur AS cible ON chocoblast.cible_chocoblast = cible.id_utilisateur
-            INNER JOIN utilisateur AS auteur ON chocoblast.auteur_chocoblast = auteur.id_utilisateur LIMIT 1');
+            INNER JOIN utilisateur AS auteur ON chocoblast.auteur_chocoblast = auteur.id_utilisateur');
             $req->execute();
             return $req->fetchAll(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Chocoblast::class);
         } catch (\Exception $e) {
