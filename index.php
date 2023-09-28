@@ -76,13 +76,11 @@
             case '/mvc/useractivate':
                 $userController->activateUser();
                 break;
-            case '/mvc/chocoblastupdate':
-                $homeController->get401();
-                break;
             case '/mvc/chocoblastfilter':
                 $chocoblastController->filterChocoblast();
                 break;
             case '/mvc/commentaireadd':
+            case '/mvc/chocoblastupdate':
                 $homeController->get401();
                 break;
             default:

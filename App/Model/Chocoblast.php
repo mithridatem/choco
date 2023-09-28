@@ -113,11 +113,12 @@ class Chocoblast extends BddConnect{
             INNER JOIN utilisateur AS cible ON chocoblast.cible_chocoblast = cible.id_utilisateur
             INNER JOIN utilisateur AS auteur ON chocoblast.auteur_chocoblast = auteur.id_utilisateur
             WHERE id_chocoblast = ?';
-            $requete2 = 'SELECT * FROM chocoblast WHERE id_chocoblast = ?';
+            $requete2 = 'SELECT id_chocoblast FROM chocoblast WHERE id_chocoblast = ?';
             $id = $this->getId();
             $req = $this->connexion()->prepare($requete2);
             $req->bindParam(1, $id , \PDO::PARAM_INT);
             $req->execute();
+            //test si la requête renvoi un enregistrement
             if($req->fetch()){
                 $req2 = $this->connexion()->prepare($requete);
                 $req2->bindParam(1, $id , \PDO::PARAM_INT);

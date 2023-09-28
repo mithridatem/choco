@@ -8,18 +8,50 @@ use App\Utils\Utilitaire;
 class CommentaireController extends Commentaire{
     public function addCommentaire(){
         $error = "";
-        $choc = new Chocoblast();
-        $choc->setId($_GET['id_chocoblast']);
-        dd($choc->find());
-        //variable à récupérer :
-        //chocoblast  $_GET['id_chocoblast],
-        //auteur $_SESSION['id']
-        //tester si le chocoblast existe (find de chocoblast en passant la valeur $_GET['id_chocoblast])
-            //tester si le formulaire est submit,
-                //tester si les champs sont bien remplis
-                    //ajouter le commentaire
-                //Tester afficher un erreur les champs ne sont pas remplis
-        //Tester si il n'existe pas afficher une erreur
+        //test si le paramètre $_GET['id_chocoblast'] si il existe
+        if(isset($_GET['id_chocoblast'])){
+            //test si le paramètre $_GET['id_chocoblast'] si il est différent de vide
+            if(!empty($_GET['id_chocoblast'])){
+                $choc = new Chocoblast();
+                $choc->setId($_GET['id_chocoblast']);
+                //test si le chocoblast existe
+                if($choc->find()){
+                    //test si le formulaire est submit
+                    if(isset($_POST['submit'])){
+                        //test si le formulaire est rempli
+                        if(!empty($_POST['text_commentaire'])){
+                            $date = new \DateTimeImmutable();
+                            //setter la date
+                            $this->setDate($date->format('Y-m-d'));
+                            $this->setText(Utilitaire::cleanInput($_POST['text_commentaire']));
+                            $this->setNote(Utilitaire::cleanInput($_POST['note_commentaire']));
+                            $this->setStatut(false);
+                            $this->getAuteur()->setId(Utilitaire::cleanInput($_SESSION['id']));
+                            $this->getChocoblast()->setId(Utilitaire::cleanInput($_GET['id_chocoblast']));
+                            //ajout du commentaire
+                            $this->add();
+                            $error = "Le commentaire à été ajouté";
+                        }
+                        //test si les champs ne sont pas remplis
+                        else{
+                            $error = "Veuillez remplir tous les champs du formulaire";
+                        }
+                    }
+                }
+                //test le chocoblast n'existe pas
+                else{
+                    header('location: ./chocoblastfilter');
+                }
+            }
+            //test si le paramètre $_GET['id_chocoblast] est vide
+            else{
+                header('location: ./chocoblastfilter');
+            }
+        }
+        //test si le paramètre $_GET['id_chocoblast] n'existe pas
+        else{
+            header('location: ./chocoblastfilter');
+        }
         Template::render('navbar.php', 'Commenter', 'vueAddCommentary.php', 'footer.php', 
         $error, ['script.js', 'main.js'], ['style.css', 'main.css']);
     }
