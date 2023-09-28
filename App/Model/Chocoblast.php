@@ -105,25 +105,34 @@ class Chocoblast extends BddConnect{
     }
     public function find(){
         try {
-            $id = $this->getId();
-            $req = $this->connexion()->prepare('SELECT id_chocoblast, slogan_chocoblast,
+            $requete = 'SELECT id_chocoblast, slogan_chocoblast,
             date_chocoblast, auteur_chocoblast AS auteur_id, auteur.nom_utilisateur AS auteur_nom,
             auteur.prenom_utilisateur AS auteur_prenom, cible_chocoblast AS cible_id,
             cible.nom_utilisateur AS cible_nom, cible.prenom_utilisateur AS cible_prenom
             FROM chocoblast 
             INNER JOIN utilisateur AS cible ON chocoblast.cible_chocoblast = cible.id_utilisateur
             INNER JOIN utilisateur AS auteur ON chocoblast.auteur_chocoblast = auteur.id_utilisateur
-            WHERE id_chocoblast = ?');
+            WHERE id_chocoblast = ?';
+            $id = $this->getId();
+            $req = $this->connexion()->prepare($requete);
             $req->bindParam(1, $id , \PDO::PARAM_INT);
             $req->execute();
-            $req->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Chocoblast::class);
-            $choco = $req->fetch();
-            $choco->getAuteur()->setId($choco->auteur_id);
-            $choco->getAuteur()->setNom($choco->auteur_nom);
-            $choco->getAuteur()->setPrenom($choco->auteur_prenom);
-            $choco->getCible()->setId($choco->cible_id);
-            $choco->getCible()->setNom($choco->cible_nom);
-            $choco->getCible()->setPrenom($choco->cible_prenom);
+            if($req->fetch()){
+                $req2 = $this->connexion()->prepare($requete);
+                $req2->bindParam(1, $id , \PDO::PARAM_INT);
+                $req2->execute();
+                $req2->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Chocoblast::class);
+                $choco = $req2->fetch();
+                $choco->getAuteur()->setId($choco->auteur_id);
+                $choco->getAuteur()->setNom($choco->auteur_nom);
+                $choco->getAuteur()->setPrenom($choco->auteur_prenom);
+                $choco->getCible()->setId($choco->cible_id);
+                $choco->getCible()->setNom($choco->cible_nom);
+                $choco->getCible()->setPrenom($choco->cible_prenom);
+            }
+            else{
+                $choco = null;
+            }
             return $choco;
         } catch (\Exception $e) {
             die('Error : '.$e->getMessage());

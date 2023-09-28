@@ -78,7 +78,7 @@ class Commentaire extends BddConnect{
             $auteur = $this->auteur_commentaire->getId();
             $chocoblast = $this->chocoblast_commentaire->getId();
             $req = $this->connexion()->prepare('INSERT INTO commentaire(
-                note_commentaire, text_commentaire, date_commentaire, statut_commentaire
+                note_commentaire, text_commentaire, date_commentaire, statut_commentaire,
                 auteur_commentaire, id_chocoblast) VALUES(?,?,?,?,?,?)');
             $req->bindParam(1, $note, \PDO::PARAM_INT);
             $req->bindParam(2, $text, \PDO::PARAM_STR);
