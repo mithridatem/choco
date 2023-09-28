@@ -1,0 +1,43 @@
+{
+    "class":[
+        {
+            "path": "./App/Utils/BddConnect.php"
+        },
+        {
+            "path": "./App/Utils/Messagerie.php"
+        },
+        {
+            "path": "./App/Utils/Utilitaire.php"
+        },
+        {
+            "path": "./App/Model/Roles.php"
+        },
+        {
+            "path": "./App/Model/Utilisateur.php"
+        },
+        {
+            "path": "./App/Model/Chocoblast.php"
+        },
+        {
+            "path": "./App/Model/Commentaire.php"
+        },
+        {
+            "path": "./App/Vue/Template.php"
+        },
+        {
+            "path": "./App/Controller/ChocoblastController.php"
+        },
+        {
+            "path": "./App/Controller/CommentaireController.php"
+        },
+        {
+            "path": "./App/Controller/HomeController.php"
+        },
+        {
+            "path": "./App/Controller/RolesController.php"
+        },
+        {
+            "path": "./App/Controller/UtilisateurController.php"
+        }
+    ] 
+}
