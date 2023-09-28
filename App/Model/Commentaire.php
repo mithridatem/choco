@@ -45,7 +45,7 @@ class Commentaire extends BddConnect{
     public function getDate():?string{
         return $this->date_commentaire;
     }
-    public function setDate(?int $date){
+    public function setDate(?string $date){
         $this->date_commentaire = $date;
     }
     public function getStatut():?bool{
