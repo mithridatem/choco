@@ -31,8 +31,8 @@ class ChocoblastController extends Chocoblast{
                 $error = "Veuillez remplir tous les champs du formulaire";
             }
         }
-        Template::render('navbar.php', 'Chocoblast', 'vueAddChocoblast.php', 'footer.php', 
-        $error, ['script.js', 'main.js'], ['style.css', 'main.css'], $users);
+        Template::render('navbar.php', 'footer.php','vueAddChocoblast.php','Chocoblast',   
+        ['script.js', 'main.js'],['style.css', 'main.css'],$error,$users);
     }
     public function getAllChocoblast(){
         $error = "";
@@ -40,8 +40,8 @@ class ChocoblastController extends Chocoblast{
         if(empty($chocos)){
             $error = "Il n'y à pas de chocoblasts sur le site";
         }
-        Template::render('navbar.php', 'Tous les Chocoblasts', 'vueAllChocoblast.php', 'footer.php', 
-        $error, ['script.js', 'main.js'], ['style.css', 'main.css'], $chocos);
+        Template::render('navbar.php','footer.php','vueAllChocoblast.php','Tous les Chocoblasts', 
+        ['script.js', 'main.js'],['style.css', 'main.css'],$error,$chocos);
     }
     public function updateChocoblast(){
         $error ="";
@@ -95,8 +95,8 @@ class ChocoblastController extends Chocoblast{
         else{
             $error = "Les paramètres sont invalides";
         }
-        Template::render('navbar.php', 'mise à jour chocoblast', 'vueUpdateChocoblast.php', 'footer.php', 
-        $error, ['script.js', 'main.js'], ['style.css', 'main.css'], $data);
+        Template::render('navbar.php','footer.php','vueUpdateChocoblast.php','mise à jour chocoblast', 
+        ['script.js', 'main.js'],['style.css', 'main.css'],$error,$data);
     }
     public function filterChocoblast(){
         $error = "";
@@ -111,7 +111,8 @@ class ChocoblastController extends Chocoblast{
         else{
             $error = "La liste des chocoblast est vide ";
         }
-        Template::render('navbar.php', 'Filtrer chocoblasts', 'vueFilterAllChocoblast.php', 'footer.php', 
-        $error, ['script.js', 'main.js'], ['style.css', 'main.css'], $chocos);
+        Template::render('navbar.php','footer.php','vueFilterAllChocoblast.php','Filtrer chocoblasts', 
+        ['script.js', 'main.js'], ['style.css', 'main.css'], 
+        $error, $chocos);
     }
 }

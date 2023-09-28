@@ -59,8 +59,8 @@ class UtilisateurController extends Utilisateur{
                 $error = "Veuillez renseigner tous les champs du formulaire";
             }
         }
-        Template::render('navbar.php', 'Inscription', 'vueAddUser.php', 'footer.php', 
-        $error, ['script.js'], ['style.css']);
+        Template::render('navbar.php','footer.php','vueAddUser.php','Inscription', 
+        ['script.js'],['style.css'],$error);
     }
     public function connexionUser(){   
         $error ="";
@@ -99,8 +99,8 @@ class UtilisateurController extends Utilisateur{
                 $error = "Veuillez renseigner tous les champs du formulaire";
             }
         }
-        Template::render('navbar.php', 'Connexion', 'vueConnexionUser.php', 'footer.php', 
-        $error, ['script.js', 'main.js'], ['style.css', 'main.css']);
+        Template::render('navbar.php','footer.php','vueConnexionUser.php','Connexion', 
+        ['script.js', 'main.js'], ['style.css', 'main.css'],$error);
     }
     public function deconnexionUser(){
         unset($_COOKIE['PHPSESSID']);
@@ -141,8 +141,8 @@ class UtilisateurController extends Utilisateur{
             $url = "./useradd";
         }
         //appel de la vue (page html)
-        Template::render('navbar.php', 'Activation', 'vueActivateUser.php', 'footer.php', 
-        $error, ['script.js', 'main.js'], ['style.css', 'main.css']);
+        Template::render('navbar.php','footer.php','vueActivateUser.php','Activation', 
+        ['script.js', 'main.js'], ['style.css', 'main.css'],$error);
         //redirection
         header("Refresh:2; url=$url");
     }
