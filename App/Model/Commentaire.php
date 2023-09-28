@@ -39,7 +39,7 @@ class Commentaire extends BddConnect{
     public function getText():?string{
         return $this->text_commentaire;
     }
-    public function setText(?int $text){
+    public function setText(?string $text){
         $this->text_commentaire = $text;
     }
     public function getDate():?string{
@@ -51,7 +51,7 @@ class Commentaire extends BddConnect{
     public function getStatut():?bool{
         return $this->statut_commentaire;
     }
-    public function setStatut(?int $statut){
+    public function setStatut(?bool $statut){
         $this->statut_commentaire = $statut;
     }
     public function getAuteur():?Utilisateur{
