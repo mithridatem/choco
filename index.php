@@ -9,11 +9,13 @@
     use App\Controller\HomeController;
     use App\Controller\ChocoblastController;
     use App\Controller\CommentaireController;
+    use App\Controller\ApiController;
     $userController = new UtilisateurController();  
     $rolesController = new RolesController();
     $homeController = new HomeController();   
     $chocoblastController = new ChocoblastController();  
     $commentaireController = new CommentaireController();  
+    $apiController = new ApiController();  
     //utilisation de session_start(pour gérer la connexion au serveur)
     session_start();
     //Analyse de l'URL avec parse_url() et retourne ses composants
@@ -54,6 +56,12 @@
             case '/mvc/commentaireall':
                 $commentaireController->allCommentaire();
                 break;
+            case '/mvc/api':
+                $apiController->getAllRoles();
+                break;
+            case '/mvc/api/addrole':
+                $apiController->addRoleByJson();
+                break;
             default:
                 $homeController->get404();
                 break;
@@ -88,6 +96,12 @@
                 break;
             case '/mvc/commentaireall':
                 $commentaireController->allCommentaire();
+                break;
+            case '/mvc/api':
+                $apiController->getAllRoles();
+                break;
+            case '/mvc/api/addrole':
+                $apiController->addRoleByJson();
                 break;
             default:
                 $homeController->get404();

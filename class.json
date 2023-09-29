@@ -38,6 +38,9 @@
         },
         {
             "path": "./App/Controller/UtilisateurController.php"
+        },
+        {
+            "path": "./App/Controller/ApiController.php"
         }
     ] 
 }
