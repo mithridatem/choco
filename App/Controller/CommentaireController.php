@@ -55,4 +55,9 @@ class CommentaireController extends Commentaire{
         Template::render('navbar.php', 'footer.php', 'vueAddCommentary.php','Commenter',   
         ['script.js', 'main.js'], ['style.css', 'main.css'],$error);
     }
+    public function allCommentaire(){
+        $error = "";
+        Template::render('navbar.php', 'footer.php', 'vueAllCommentary.php','Commenter',   
+        ['script.js', 'main.js'], ['style.css', 'main.css'],$error, $commentaires);
+    }
 }

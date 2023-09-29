@@ -51,6 +51,9 @@
             case '/mvc/commentaireadd':
                 $commentaireController->addCommentaire();
                 break;
+            case '/mvc/commentaireall':
+                $commentaireController->allCommentaire();
+                break;
             default:
                 $homeController->get404();
                 break;
@@ -82,6 +85,9 @@
             case '/mvc/commentaireadd':
             case '/mvc/chocoblastupdate':
                 $homeController->get401();
+                break;
+            case '/mvc/commentaireall':
+                $commentaireController->allCommentaire();
                 break;
             default:
                 $homeController->get404();

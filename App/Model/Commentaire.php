@@ -92,4 +92,7 @@ class Commentaire extends BddConnect{
             die('Error : '.$e->getMessage());
         }
     }
+    public function findBy(){
+
+    }
 }

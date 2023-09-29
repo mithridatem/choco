@@ -112,7 +112,6 @@ class ChocoblastController extends Chocoblast{
             $error = "La liste des chocoblast est vide ";
         }
         Template::render('navbar.php','footer.php','vueFilterAllChocoblast.php','Filtrer chocoblasts', 
-        ['script.js', 'main.js'], ['style.css', 'main.css'], 
-        $error, $chocos);
+        ['script.js', 'main.js'], ['style.css', 'main.css'],$error, $chocos);
     }
 }
