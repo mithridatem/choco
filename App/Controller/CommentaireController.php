@@ -57,6 +57,21 @@ class CommentaireController extends Commentaire{
     }
     public function allCommentaire(){
         $error = "";
+        $commentaires = [];
+        if(isset($_GET['id_chocoblast'])){
+            if(!empty($_GET['id_chocoblast'])){
+                $this->getChocoblast()->setId(Utilitaire::cleanInput($_GET['id_chocoblast']));
+                $commentaires = $this->findBy();
+                if(empty($commentaires)){
+                    $error = "il n'y a pas de commentaire";
+                    header("Refresh:2; url=./chocoblastfilter");
+                }
+            }else{
+                header('location: ./chocoblastfilter');
+            }
+        }else{
+            header('location: ./chocoblastfilter');
+        }
         Template::render('navbar.php', 'footer.php', 'vueAllCommentary.php','Commenter',   
         ['script.js', 'main.js'], ['style.css', 'main.css'],$error, $commentaires);
     }

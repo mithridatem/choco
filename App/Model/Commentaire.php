@@ -93,6 +93,17 @@ class Commentaire extends BddConnect{
         }
     }
     public function findBy(){
-
+        try {
+            $id = $this->getChocoblast()->getId();
+            $req = $this->connexion()->prepare('SELECT id_commentaire, text_commentaire,
+            note_commentaire, date_commentaire, prenom_utilisateur, nom_utilisateur, id_chocoblast FROM commentaire
+            INNER JOIN utilisateur  ON commentaire.auteur_commentaire = utilisateur.id_utilisateur
+            WHERE id_chocoblast = ?');
+            $req->bindParam(1, $id, \PDO::PARAM_INT);
+            $req->execute();
+            return $req->fetchAll(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, Commentaire::class);
+        } catch (\Exception $e) {
+            //throw $th;
+        }
     }
 }
